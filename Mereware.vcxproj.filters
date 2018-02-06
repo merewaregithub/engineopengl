@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Window">
+      <UniqueIdentifier>{2ba509c8-e64b-4404-ae27-75f469a60497}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Window">
+      <UniqueIdentifier>{91d9ef7a-b3ba-46f4-ba83-0e734818179c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tool">
+      <UniqueIdentifier>{587ea2a0-5049-4584-b418-b2d3f80a4f9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Config">
+      <UniqueIdentifier>{b39eefb1-476f-4492-af3f-546845ee4ca3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tool\Image">
+      <UniqueIdentifier>{9811a82c-cded-4b31-8002-d867517fe459}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shader">
+      <UniqueIdentifier>{ec3a80fa-dcb4-4f43-bf9f-b5538029f7d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shader\vs">
+      <UniqueIdentifier>{be33554e-d99d-4d1b-9c8e-a42b9f83992d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shader\fs">
+      <UniqueIdentifier>{881608e0-b2af-4aa2-8fda-690e782218b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GUI">
+      <UniqueIdentifier>{7e421278-1d53-4175-81ba-25a735283568}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{54d94bf9-62a9-4e4b-be42-eb9c115afc4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Input">
+      <UniqueIdentifier>{655721c2-3317-42f7-90ae-1c8c81b63572}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\OBJ">
+      <UniqueIdentifier>{43398581-e472-47a9-b554-e3985e3b2ea1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="window.cpp">
+      <Filter>Source Files\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="global.h">
+      <Filter>Header Files\Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="keyboard.cpp">
+      <Filter>Resource Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="mouse.cpp">
+      <Filter>Resource Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\Window</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="window.h">
+      <Filter>Header Files\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="config.h">
+      <Filter>Header Files\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Header Files\Tool\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="shader.h">
+      <Filter>Header Files\Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="image_loader.h">
+      <Filter>Header Files\Tool\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="keyboard.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="mouse.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Header Files\OBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Header Files\OBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Header Files\OBJ</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="config_window_hints.txt">
+      <Filter>Resource Files\Config</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="text2D.fs">
+      <Filter>Resource Files\Shader\fs</Filter>
+    </None>
+    <None Include="text2D.vs">
+      <Filter>Resource Files\Shader\vs</Filter>
+    </None>
+    <None Include="button2D.fs">
+      <Filter>Resource Files\Shader\fs</Filter>
+    </None>
+    <None Include="button2D.vs">
+      <Filter>Resource Files\Shader\vs</Filter>
+    </None>
+    <None Include="default.fs">
+      <Filter>Resource Files\Shader\fs</Filter>
+    </None>
+    <None Include="default.vs">
+      <Filter>Resource Files\Shader\vs</Filter>
+    </None>
+  </ItemGroup>
+</Project>
