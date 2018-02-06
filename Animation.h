@@ -9,18 +9,18 @@ public:
 	Material* common_material;
 	GLuint common_textureID = 0;
 private:
-	std::vector<Model>* frames;
+	std::vector<Model*>* frames;
 	int frameCount;
 	int currentFrame;
 public:
 	Animation(std::string path, int frameCount) {
 		common_material = new Material("animation", path, path + "_000001.mtl");
 		common_textureID = ImageLoader::loadTexture(common_material->map_Kd.c_str());
-		frames = new std::vector<Model>();
+		frames = new std::vector<Model*>();
 		this->frameCount = frameCount;
 		this->currentFrame = 0;
 		for (size_t i = 1; i <= frameCount; i++) {
-			frames->push_back(Model("animation", path, + "_" + intFormat("000000", i), common_textureID, common_material));
+			frames->push_back(new Model("animation", path, + "_" + intFormat("000000", i), common_textureID, common_material));
 		}
 		
 	}
@@ -32,8 +32,16 @@ public:
 		}
 	}
 
-	void Animation::render(glm::mat4 view, glm::vec3 translate) {
-		frames->at(currentFrame).render(view, translate);
+	void Animation::move(glm::vec3 rotate, glm::vec3 translate) {
+		frames->at(currentFrame)->move(rotate, translate);
+	}
+
+	void Animation::render(glm::mat4 view) {
+		frames->at(currentFrame)->render(view);
+	}
+
+	Model*& Animation::getCurrentModel() {
+		return frames->at(*&currentFrame);
 	}
 
 	void Animation::cleanUp() {

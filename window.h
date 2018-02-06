@@ -13,16 +13,23 @@
 #include "Camera.h"
 #include "Model.h"
 #include "Animation.h"
+#include "Collision.h"
+#include "Light.h"
+#include "FrameBuffer.h"
 
 class Window {
 private:
+	Collision* collision;
 	Text *fps_count, *fps_fps, *exit_text;
 	Font* font;
 	Button* button;
-	Model *box, *ground, *suzanne;
-	Animation *moving_box, *moving_box_2;
+	Model *box, *ground, *suzanne, *suzanne2;
+	Animation *collide_anim;
+	PointLight* pointLight0;
+	DirectLight* dirLight0;
 private:
 	Camera* camera;
+	FrameBuffer* frameBuffer;
 private:
 	double tickRate = 1 / 60.0f;
 	double tickTime = 0.0f;

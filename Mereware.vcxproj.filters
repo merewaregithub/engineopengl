@@ -49,6 +49,9 @@
     <Filter Include="Header Files\OBJ">
       <UniqueIdentifier>{43398581-e472-47a9-b554-e3985e3b2ea1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\OBJ\3D">
+      <UniqueIdentifier>{2742b1ba-e57e-46e8-b215-14f1c8322378}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -110,6 +113,27 @@
     <ClInclude Include="Object.h">
       <Filter>Header Files\OBJ</Filter>
     </ClInclude>
+    <ClInclude Include="Line3D.h">
+      <Filter>Header Files\OBJ\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane3D.h">
+      <Filter>Header Files\OBJ\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Triangle3D.h">
+      <Filter>Header Files\OBJ\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Bounds.h">
+      <Filter>Header Files\OBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>Header Files\OBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Header Files\OBJ</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameBuffer.h">
+      <Filter>Header Files\Window</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="config_window_hints.txt">
@@ -133,6 +157,30 @@
       <Filter>Resource Files\Shader\fs</Filter>
     </None>
     <None Include="default.vs">
+      <Filter>Resource Files\Shader\vs</Filter>
+    </None>
+    <None Include="shape3d.fs">
+      <Filter>Resource Files\Shader\fs</Filter>
+    </None>
+    <None Include="shape3d.vs">
+      <Filter>Resource Files\Shader\vs</Filter>
+    </None>
+    <None Include="multilight.fs">
+      <Filter>Resource Files\Shader\fs</Filter>
+    </None>
+    <None Include="multilight.vs">
+      <Filter>Resource Files\Shader\vs</Filter>
+    </None>
+    <None Include="light_model.fs">
+      <Filter>Resource Files\Shader\fs</Filter>
+    </None>
+    <None Include="light_model.vs">
+      <Filter>Resource Files\Shader\vs</Filter>
+    </None>
+    <None Include="post_processing.fs">
+      <Filter>Resource Files\Shader\fs</Filter>
+    </None>
+    <None Include="post_processing.vs">
       <Filter>Resource Files\Shader\vs</Filter>
     </None>
   </ItemGroup>

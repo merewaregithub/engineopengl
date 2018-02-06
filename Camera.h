@@ -1,17 +1,17 @@
 #pragma once
+#include "Line3D.h"
+#include "Triangle3D.h"
 #include <iostream>
 #include "mouse.h"
 #include "keyboard.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-#define GLM_ENABLE_EXPERIMENTAL
-#include "glm/gtx/rotate_vector.hpp"
-#include <glm/gtc/type_ptr.hpp>
 
 class Camera {
 public:
 	static GLfloat lastX;
 	static GLfloat lastY;
+	static Line3D* mouse_sight;
 public:
 	glm::mat4 view;
 	GLfloat deltaTime = 0.0f;
@@ -31,6 +31,11 @@ public:
 
 	GLfloat yaw = -90.0f;
 	GLfloat pitch = 0.0f;
+
+	//mouse picker
+	glm::vec3 mouse_ray_start, mouse_ray_end;
+	glm::vec3 mouse_ray;
+	glm::mat4 projection = glm::perspective(glm::radians(45.0f), app_ratio, 0.1f, 150.0f);
 public:
 	Camera::Camera(float x, float y, float z);
 	void Camera::init(int w, int h);

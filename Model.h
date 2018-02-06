@@ -3,8 +3,14 @@
 #include <string>
 #include <fstream>
 #include "Object.h"
+#include "Bounds.h"
 
 class Model {
+public:
+	//bool canRender = true;
+public:
+	Bounds* bounds = nullptr;
+	bool renderBounds = false;
 public:
 	GLuint common_textureID;
 	Material* common_material;
@@ -51,6 +57,7 @@ public:
 		fn = new std::vector<v3>();
 
 		bool seen_object = false;
+		bool seen_bounding_box = false;
 		std::ifstream file(parent_folder + "/" + path + "/" + path + model_number + ".obj");
 		if (file.is_open()) {
 			std::string word;
@@ -73,24 +80,43 @@ public:
 					vn->push_back(v3(x, y, z));
 				}
 				else if (word == "f") {
-					file >> word;
-					float vv1 = std::stoi(word.substr(0, word.find_first_of('/')));
-					float tt1 = std::stoi(word.substr(word.find_first_of('/') + 1, word.find_last_of('/') - word.find_first_of('/') + 1));
-					float nn1 = std::stoi(word.substr(word.find_last_of('/') + 1, word.size() - word.find_last_of('/') + 1));
+					if (seen_bounding_box) {
+						file >> word;
+						float vv1 = std::stoi(word.substr(0, word.find_first_of('/')+1));
+						float nn1 = std::stoi(word.substr(word.find_last_of('/') + 1, word.size() - word.find_last_of('/') + 1));
 
-					file >> word;
-					float vv2 = std::stoi(word.substr(0, word.find_first_of('/')));
-					float tt2 = std::stoi(word.substr(word.find_first_of('/') + 1, word.find_last_of('/') - word.find_first_of('/') + 1));
-					float nn2 = std::stoi(word.substr(word.find_last_of('/') + 1, word.size() - word.find_last_of('/') + 1));
+						file >> word;
+						float vv2 = std::stoi(word.substr(0, word.find_first_of('/') + 1));
+						float nn2 = std::stoi(word.substr(word.find_last_of('/') + 1, word.size() - word.find_last_of('/') + 1));
 
-					file >> word;
-					float vv3 = std::stoi(word.substr(0, word.find_first_of('/')));
-					float tt3 = std::stoi(word.substr(word.find_first_of('/') + 1, word.find_last_of('/') - word.find_first_of('/') + 1));
-					float nn3 = std::stoi(word.substr(word.find_last_of('/') + 1, word.size() - word.find_last_of('/') + 1));
+						file >> word;
+						float vv3 = std::stoi(word.substr(0, word.find_first_of('/') + 1));
+						float nn3 = std::stoi(word.substr(word.find_last_of('/') + 1, word.size() - word.find_last_of('/') + 1));
 
-					fv->push_back(v3(vv1, vv2, vv3));
-					ft->push_back(v3(tt1, tt2, tt3));
-					fn->push_back(v3(nn1, nn2, nn3));
+						fv->push_back(v3(vv1, vv2, vv3));
+						fn->push_back(v3(nn1, nn2, nn3));
+					}
+					else {
+						file >> word;
+						//std::cout << word << std::endl;
+						float vv1 = std::stoi(word.substr(0, word.find_first_of('/')));
+						float tt1 = std::stoi(word.substr(word.find_first_of('/') + 1, word.find_last_of('/') - word.find_first_of('/') + 1));
+						float nn1 = std::stoi(word.substr(word.find_last_of('/') + 1, word.size() - word.find_last_of('/') + 1));
+
+						file >> word;
+						float vv2 = std::stoi(word.substr(0, word.find_first_of('/')));
+						float tt2 = std::stoi(word.substr(word.find_first_of('/') + 1, word.find_last_of('/') - word.find_first_of('/') + 1));
+						float nn2 = std::stoi(word.substr(word.find_last_of('/') + 1, word.size() - word.find_last_of('/') + 1));
+
+						file >> word;
+						float vv3 = std::stoi(word.substr(0, word.find_first_of('/')));
+						float tt3 = std::stoi(word.substr(word.find_first_of('/') + 1, word.find_last_of('/') - word.find_first_of('/') + 1));
+						float nn3 = std::stoi(word.substr(word.find_last_of('/') + 1, word.size() - word.find_last_of('/') + 1));
+
+						fv->push_back(v3(vv1, vv2, vv3));
+						ft->push_back(v3(tt1, tt2, tt3));
+						fn->push_back(v3(nn1, nn2, nn3));
+					}
 				}
 				else if (word == "mtllib") {
 					file >> word;
@@ -99,14 +125,22 @@ public:
 					}
 				}
 				else if (word == "o") {
-					if (seen_object) {
+					file >> word;
+					name = word;
+					if (name == "collision_box_poly") {
+						seen_bounding_box = true;
+						if (seen_object) {
+							objects->insert(std::pair<std::string, Object>(name, Object(material, name, usemtl, s, vv, vn, fv, ft, fn, vt, common_textureID)));
+							seen_object = false;
+						}
+					}
+					else if (seen_object) {
 						objects->insert(std::pair<std::string, Object>(name, Object(material, name, usemtl, s, vv, vn, fv, ft, fn, vt, common_textureID)));
 					}
 					else {
 						seen_object = true;
 					}
-					file >> word;
-					name = word;
+					
 				}
 				else if (word == "usemtl") {
 					file >> word;
@@ -117,12 +151,42 @@ public:
 					s = word;
 				}
 			}
-			objects->insert(std::pair<std::string, Object>(name, Object(material, name, usemtl, s, vv, vn, fv, ft, fn, vt, common_textureID)));
+			if (seen_bounding_box) {
+				bounds = new Bounds(name, vv, vn, fv, fn);
+			}
+			else if (seen_object) {
+				objects->insert(std::pair<std::string, Object>(name, Object(material, name, usemtl, s, vv, vn, fv, ft, fn, vt, common_textureID)));
+			}
 		}
 		else std::cout << "fail: " << parent_folder + "/" + path + "/" + path + model_number + ".obj" << " - could not be opened" << std::endl;
 		file.close();
 
 		cleanUp();
+	}
+
+	void Model::move(glm::vec3 rotate, glm::vec3 translate) {
+		for (std::map<std::string, Object>::iterator iter = objects->begin(); iter != objects->end(); ++iter) {
+			iter->second.move(rotate, translate);
+		}
+		if (bounds != nullptr) {
+			bounds->move(rotate, translate);
+		}
+	}
+
+	void Model::setShader(Shader *&shader) {
+		for (std::map<std::string, Object>::iterator iter = objects->begin(); iter != objects->end(); ++iter) {
+			iter->second.setShader(shader);
+		}
+	}
+
+	void Model::render(glm::mat4 view) {
+		//if(canRender)
+		for (std::map<std::string, Object>::iterator iter = objects->begin(); iter != objects->end(); ++iter) {
+			iter->second.render(view);
+		}
+		if (bounds != nullptr && renderBounds) {
+			bounds->render(view);
+		}
 	}
 
 	void Model::render(glm::mat4 view, glm::vec3 translate) {

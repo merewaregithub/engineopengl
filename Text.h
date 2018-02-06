@@ -190,12 +190,13 @@ public:
 	}
 
 	void renderChar(Character &ch, glm::vec3 translate) {
-		glBindTexture(GL_TEXTURE_2D, ch.textureID);
 		shader->use();
 		glm::mat4 model(1);
 		model = glm::translate(model, translate);
 		model = glm::scale(model, glm::vec3((ch.width / base), (ch.height / lineHeight), 1.0f));
 		shader->setMat4("model", model);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, ch.textureID);
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}
@@ -328,7 +329,6 @@ public:
 	}
 
 	void Text::render(glm::vec3 translate) {
-		glBindTexture(GL_TEXTURE_2D, textureID);
 		font->shader->use();
 		glm::mat4 model(1);
 		model = glm::translate(model, glm::vec3(translate.x - 1.0f + gl_width*this->scale / 2, -1*translate.y + 1.0f - gl_height*this->scale / 2, translate.z));
@@ -337,6 +337,8 @@ public:
 		font->shader->setFloat("width", map(this->scale, 0.1f, 10.0f, 0.49f, 0.6f));
 		font->shader->setFloat("edge", map(this->scale, 0.1f, 10.0f, 0.20f, 0.00001f)+ added_edge);
 		font->shader->setVec4("color", fontColor);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureID);
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	}

@@ -22,8 +22,11 @@ void Mouse::setPosition(GLFWwindow * window, double xpos, double ypos) {
 void Mouse::cursor_pos_callback(GLFWwindow* window, double xpos, double ypos) {
 	Mouse::mouse_x = xpos;
 	Mouse::mouse_y = ypos;
-	Mouse::mouse_gl_x = width_to_gl();
-	Mouse::mouse_gl_y = height_to_gl();
+
+	if (Mouse::enabled) {
+		Mouse::mouse_gl_x = width_to_gl();
+		Mouse::mouse_gl_y = height_to_gl();
+	}
 
 	old_actions[GLFW_MOUSE_BUTTON_LEFT] = new_actions[GLFW_MOUSE_BUTTON_LEFT];
 	//std::cout << "x: " << width_to_gl() << " y: " << height_to_gl() << std::endl;

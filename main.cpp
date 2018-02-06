@@ -1,10 +1,11 @@
-//06.02.2018
 #include "global.h"
 float app_ratio, app_width, app_height;
 #include "config.h"
 #include "window.h"
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+
+#include <fmod.hpp>
 
 Window window("");
 

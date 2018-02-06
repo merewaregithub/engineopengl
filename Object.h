@@ -109,6 +109,8 @@ public:
 };
 
 class Object {
+public:
+	glm::mat4 projection, model;
 private:
 	GLuint common_textureID = 0;
 public:
@@ -135,7 +137,7 @@ public:
 		this->fn = fn;
 		this->vt = vt;
 		this->common_textureID = texture;
-
+		projection = glm::perspective(glm::radians(45.0f), app_ratio, 0.1f, 150.0f);
 		initGL();
 		cleanUp();
 	}
@@ -143,7 +145,7 @@ public:
 	void Object::initGL() {
 		shader = new Shader("default.vs", "default.fs", nullptr);
 		shader->use();
-		shader->setMat4("projection", glm::perspective(glm::radians(45.0f), app_ratio, 0.1f, 150.0f));
+		shader->setMat4("projection", projection);
 
 		vertSize = 3 * (3 + 2 + 3) * fv->size();
 		indiceSize = 3 * fv->size();
@@ -194,15 +196,38 @@ public:
 		}
 	}
 
-	void Object::render(glm::mat4 view, glm::vec3 translate) {
-		glBindTexture(GL_TEXTURE_2D, textureID);
+	void Object::move(glm::vec3 rotate, glm::vec3 translate) {
+		glm::mat4 modelMatrix(1);
+		modelMatrix = glm::translate(modelMatrix, translate);
+		modelMatrix = glm::rotate(modelMatrix, glm::radians(rotate.x), glm::vec3(1.0f, 0.0f, 0.0f));
+		modelMatrix = glm::rotate(modelMatrix, glm::radians(rotate.y), glm::vec3(0.0f, 1.0f, 0.0f));
+		modelMatrix = glm::rotate(modelMatrix, glm::radians(rotate.z), glm::vec3(0.0f, 0.0f, 1.0f));
+		model = modelMatrix;
+	}
+
+	void Object::setShader(Shader*& shader) {
+		delete this->shader;
+		this->shader = shader;
+	}
+
+	void Object::render(glm::mat4 view) {
 		shader->use();
 		shader->setMat4("view", view);
-		glm::mat4 model(1);
-		model = glm::translate(model, translate);
-		//model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(1.0f, 1.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(scale, scale, 1.0f));
 		shader->setMat4("model", model);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureID);
+		glBindVertexArray(VAO);
+		glDrawArrays(GL_TRIANGLES, 0, indiceSize);
+	}
+
+	void Object::render(glm::mat4 view, glm::vec3 translate) {
+		shader->use();
+		shader->setMat4("view", view);
+		glm::mat4 model_t(1);
+		model_t = glm::translate(model_t, translate);
+		shader->setMat4("model", model_t);
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureID);
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, indiceSize);
 	}
