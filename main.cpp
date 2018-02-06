@@ -1,3 +1,4 @@
+//06.02.2018
 #include "global.h"
 float app_ratio, app_width, app_height;
 #include "config.h"
